@@ -9,6 +9,7 @@ import com.kafka.app1.consumer.MetricEnum.SumOrRedEnum;
 import com.kafka.app1.consumer.StructResponseEnum.ResponseMetric;
 import com.kafka.app1.entity.TaskEntity;
 import com.kafka.app1.repositories.TaskRepository;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,9 @@ public class KafkaConsumerService {
                     topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
                     partitions = { "2" }
             ),
-            groupId = "${spring.kafka.consumer.group-id}"
+
+            groupId = "${spring.kafka.consumer.group-id}",
+            concurrency = "3"
     )
     public void partition2SendMessage(String message) {
         System.out.println("\nMessage partition 2 is: " + message);
@@ -78,22 +81,20 @@ public class KafkaConsumerService {
                     topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
                     partitions = { "1" }
             ),
-            groupId = "${spring.kafka.consumer.group-id}"
+            groupId = "${spring.kafka.consumer.group-id}",
+            concurrency = "3"
     )
-    public void partition1SendMessage(String message) {
-        System.out.println("\nMessage partition 1 is: " + message);
-    }
+    public void partition1SendMessage(String message) {System.out.println("\nMessage partition 1 is: " + message);}
 
     @KafkaListener(
             topicPartitions = @TopicPartition(
                     topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
                     partitions = { "0" }
             ),
-            groupId = "${spring.kafka.consumer.group-id}"
+            groupId = "${spring.kafka.consumer.group-id}",
+            concurrency = "3"
     )
-    public void partition0SendMessage(String message) {
-        System.out.println("\nMessage partition 0 is: " + message);
-    }
+    public void partition0SendMessage(String message) {System.out.println("\nMessage partition 0 is: " + message);}
 
     @KafkaListener(topics = KafkaTopicConfig.TOPIC_SUM_RED_METRIC_TASK, groupId = "${spring.kafka.consumer.group-id}")
     public void sumOrRedTaskMetric(String metricObj) throws JsonProcessingException {
@@ -126,5 +127,12 @@ public class KafkaConsumerService {
         this.repository.save(task);
 
     }
+
+    @KafkaListener(topics = KafkaTopicConfig.TOPIC_PARTITION_KEY_SEND_MESSAGE, groupId = "${spring.kafka.consumer.group-id}")
+    public void withChave(ConsumerRecord<String, String> record) {
+        System.out.printf("[key=%s] valor=%s | partição=%d%n", record.key(), record.value(), record.partition());
+    }
+
+
 
 }

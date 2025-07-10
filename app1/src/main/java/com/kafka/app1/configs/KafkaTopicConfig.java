@@ -14,11 +14,20 @@ public class KafkaTopicConfig {
     public static final String TOPIC_CREATE_NEW_TASK = "test1-study-kafka-create-task";
     public static final String TOPIC_SUM_RED_METRIC_TASK = "test1-study-kafka-sum-red-metric-task";
     public static final String TOPIC_PARTITION_SEND_MESSAGE = "test-study-partition-send-message";
+    public static final String TOPIC_PARTITION_KEY_SEND_MESSAGE = "test-study-partition-key-send-message";
 
     @Bean
     public NewTopic PartitionSendMessge() {
         return TopicBuilder.name(TOPIC_PARTITION_SEND_MESSAGE)
                 .partitions(3)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic KeyTopic() {
+        return TopicBuilder.name(TOPIC_PARTITION_KEY_SEND_MESSAGE)
+                .partitions(4)
                 .replicas(1)
                 .build();
     }

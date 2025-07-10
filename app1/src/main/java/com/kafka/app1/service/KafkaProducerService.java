@@ -60,4 +60,8 @@ public class KafkaProducerService {
         }
     }
 
+    public void withKey(String chave, String valor) {
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_KEY_SEND_MESSAGE, chave, valor);
+    }
+
 }

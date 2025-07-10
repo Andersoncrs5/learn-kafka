@@ -1,10 +1,12 @@
 package com.kafka.app1.controller;
 
+import com.kafka.app1.configs.KafkaTopicConfig;
 import com.kafka.app1.consumer.KafkaConsumerService;
 import com.kafka.app1.consumer.MetricEnum.ColumnTaskMetricEntity;
 import com.kafka.app1.consumer.MetricEnum.SumOrRedEnum;
 import com.kafka.app1.entity.TaskEntity;
 import com.kafka.app1.service.HelloService;
+import com.kafka.app1.service.KafkaProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,7 @@ public class HelloController {
     @Autowired
     private HelloService helloService;
     @Autowired
-    private KafkaConsumerService consumerService;
+    private KafkaProducerService producerService;
 
     @GetMapping("/")
     public ResponseEntity<String> getHello() {
@@ -68,14 +70,20 @@ public class HelloController {
 
     @GetMapping("send-message-partition-0/{message}")
     public ResponseEntity<String> sendMessagePartition0(@PathVariable String message) {
-        consumerService.partition0SendMessage(message);
+        producerService.sendMessagePartition0(message);
         return ResponseEntity.ok(message);
     }
 
     @GetMapping("send-message-partition-1/{message}")
     public ResponseEntity<String> sendMessagePartition1(@PathVariable String message) {
-        consumerService.partition1SendMessage(message);
+        producerService.sendMessagePartition1(message);
         return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("send-message-key-partition-1/")
+    public ResponseEntity<String> sendMessagePartition1(@RequestParam String chave, @RequestParam String valor) {
+        producerService.withKey(chave, valor);
+        return ResponseEntity.ok("Message sended!");
     }
 
 }
