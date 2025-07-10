@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: app1
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: app1-study-kafka
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 2
+
+server:
+  port: 8080
