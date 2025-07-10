@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -59,6 +60,39 @@ public class KafkaConsumerService {
         TaskEntity task = objectMapper.convertValue(node, TaskEntity.class);
         var result = this.repository.save(task);
         System.out.println(result.toString());
+    }
+
+    @KafkaListener(
+            topicPartitions = @TopicPartition(
+                    topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
+                    partitions = { "2" }
+            ),
+            groupId = "${spring.kafka.consumer.group-id}"
+    )
+    public void partition2SendMessage(String message) {
+        System.out.println("\nMessage partition 2 is: " + message);
+    }
+
+    @KafkaListener(
+            topicPartitions = @TopicPartition(
+                    topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
+                    partitions = { "1" }
+            ),
+            groupId = "${spring.kafka.consumer.group-id}"
+    )
+    public void partition1SendMessage(String message) {
+        System.out.println("\nMessage partition 1 is: " + message);
+    }
+
+    @KafkaListener(
+            topicPartitions = @TopicPartition(
+                    topic = KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE,
+                    partitions = { "0" }
+            ),
+            groupId = "${spring.kafka.consumer.group-id}"
+    )
+    public void partition0SendMessage(String message) {
+        System.out.println("\nMessage partition 0 is: " + message);
     }
 
     @KafkaListener(topics = KafkaTopicConfig.TOPIC_SUM_RED_METRIC_TASK, groupId = "${spring.kafka.consumer.group-id}")

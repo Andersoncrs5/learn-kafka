@@ -32,9 +32,8 @@ public class HelloService {
         kafkaProducerService.sendChangeStatus(id.toString());
     }
 
-    public String sendMesage(String message) {
+    public void sendMesage(String message) {
         kafkaProducerService.sendMessage1(message);
-        return message;
     }
 
     public List<TaskEntity> getAll() {

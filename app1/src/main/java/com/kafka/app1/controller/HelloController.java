@@ -1,5 +1,6 @@
 package com.kafka.app1.controller;
 
+import com.kafka.app1.consumer.KafkaConsumerService;
 import com.kafka.app1.consumer.MetricEnum.ColumnTaskMetricEntity;
 import com.kafka.app1.consumer.MetricEnum.SumOrRedEnum;
 import com.kafka.app1.entity.TaskEntity;
@@ -14,6 +15,8 @@ public class HelloController {
 
     @Autowired
     private HelloService helloService;
+    @Autowired
+    private KafkaConsumerService consumerService;
 
     @GetMapping("/")
     public ResponseEntity<String> getHello() {
@@ -61,6 +64,18 @@ public class HelloController {
         var result = this.helloService.get(id);
         this.helloService.sumOrRedMetric(result, action, column);
         return ResponseEntity.ok(this.helloService.get(id));
+    }
+
+    @GetMapping("send-message-partition-0/{message}")
+    public ResponseEntity<String> sendMessagePartition0(@PathVariable String message) {
+        consumerService.partition0SendMessage(message);
+        return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("send-message-partition-1/{message}")
+    public ResponseEntity<String> sendMessagePartition1(@PathVariable String message) {
+        consumerService.partition1SendMessage(message);
+        return ResponseEntity.ok(message);
     }
 
 }

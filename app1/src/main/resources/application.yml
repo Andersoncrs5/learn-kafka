@@ -11,8 +11,14 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: all
+      acks: 1
       retries: 2
 
+springdoc:
+  swagger-ui:
+    path: /api
+  api-docs:
+    path: /v3/api-docs
+
 server:
-  port: 8080
+  port: 8888

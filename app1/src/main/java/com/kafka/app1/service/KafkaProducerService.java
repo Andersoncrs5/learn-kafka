@@ -18,6 +18,14 @@ public class KafkaProducerService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    public void sendMessagePartition0(String message) {
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 0, "1","Using partition 0");
+    }
+
+    public void sendMessagePartition1(String message) {
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 1, "2","Using partition 1");
+    }
+
     public void sendMessage(String message){
         kafkaTemplate.send(KafkaTopicConfig.TOPIC, message);
     }
