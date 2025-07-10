@@ -32,6 +32,12 @@ public class HelloController {
         return ResponseEntity.ok(message);
     }
 
+    @GetMapping("sendMesageWithCallBack/{message}")
+    public ResponseEntity<String> sendMessageWithCallBack(@PathVariable String message) {
+        helloService.sendMesageWithCallBack(message);
+        return ResponseEntity.ok(message);
+    }
+
     @GetMapping("/changeStatus/{id}")
     public ResponseEntity<String> changeStatus(@PathVariable Long id) {
         helloService.changeStatus(id);

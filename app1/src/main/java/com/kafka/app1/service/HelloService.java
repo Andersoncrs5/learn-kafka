@@ -36,6 +36,10 @@ public class HelloService {
         kafkaProducerService.sendMessage1(message);
     }
 
+    public void sendMesageWithCallBack(String message) {
+        kafkaProducerService.sendMessageWithCallBack(message);
+    }
+
     public List<TaskEntity> getAll() {
         return this.repository.findAll();
     }

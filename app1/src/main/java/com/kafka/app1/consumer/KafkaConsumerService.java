@@ -133,6 +133,4 @@ public class KafkaConsumerService {
         System.out.printf("[key=%s] valor=%s | partição=%d%n", record.key(), record.value(), record.partition());
     }
 
-
-
 }

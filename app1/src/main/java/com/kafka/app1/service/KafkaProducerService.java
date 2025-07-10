@@ -18,6 +18,18 @@ public class KafkaProducerService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    public void sendMessageWithCallBack(String message){
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC, message).whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println("✅ Enviado com sucesso! Topic: " + result.getRecordMetadata().topic() +
+                        ", Partition: " + result.getRecordMetadata().partition() +
+                        ", Offset: " + result.getRecordMetadata().offset());
+            } else {
+                System.err.println("❌ Falha ao enviar: " + ex.getMessage());
+            }
+        });
+    }
+
     public void sendMessagePartition0(String message) {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 0, "1","Using partition 0");
     }
@@ -29,6 +41,8 @@ public class KafkaProducerService {
     public void sendMessage(String message){
         kafkaTemplate.send(KafkaTopicConfig.TOPIC, message);
     }
+
+
 
     public void sendMessage1(String message) {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_SEND_MESSAGE, message);
