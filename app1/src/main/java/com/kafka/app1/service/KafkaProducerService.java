@@ -84,6 +84,11 @@ public class KafkaProducerService {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_TOPICO_PROCESSAMENTO, message);
     }
 
+    public void sendInLotes(int amount) {
+        for (int i = 1; i <= amount; i++) {
+            kafkaTemplate.send(KafkaTopicConfig.TOPIC_BATCH, "Message number: " + i);
+        }
+    }
 
 
 }

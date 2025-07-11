@@ -17,6 +17,15 @@ public class KafkaTopicConfig {
     public static final String TOPIC_PARTITION_KEY_SEND_MESSAGE = "test-study-partition-key-send-message";
     public static final String TOPIC_TOPICO_PROCESSAMENTO = "topico-processamento";
     public static final String TOPIC_TOPICO_PROCESSAMENTO_DLT = "topico-processamento.DLT";
+    public static final String TOPIC_BATCH = "topic-batch";
+
+    @Bean
+    public NewTopic SendTopicBatch() {
+        return TopicBuilder.name(TOPIC_BATCH)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic SendMessgeDlt() {

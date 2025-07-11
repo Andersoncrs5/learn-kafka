@@ -24,6 +24,12 @@ public class HelloController {
         return ResponseEntity.ok(message);
     }
 
+    @GetMapping("/send-in-lotes/{amount}")
+    public ResponseEntity<String> sendInLotes(@PathVariable int amount) {
+        helloService.sendLotes(amount);
+        return ResponseEntity.ok("Send in lotes");
+    }
+
     @GetMapping("/")
     public ResponseEntity<String> getHello() {
         String message = helloService.getHelloMessage();

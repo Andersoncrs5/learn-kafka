@@ -31,6 +31,16 @@ public class KafkaErrorHandlerConfig {
     }
 
     @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> batchFactory(
+            ConsumerFactory<String, String> consumerFactory
+    ) {
+        var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+        factory.setConsumerFactory(consumerFactory);
+        factory.setBatchListener(true);
+        return factory;
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerContainerFactory(
             ConsumerFactory<Object, Object> consumerFactory,
             DefaultErrorHandler errorHandler) {

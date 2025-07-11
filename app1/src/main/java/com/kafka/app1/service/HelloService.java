@@ -68,4 +68,9 @@ public class HelloService {
     public void sendMessageDql(String message) {
         kafkaProducerService.process(message);
     }
+
+    public void sendLotes(int amount) {
+        kafkaProducerService.sendInLotes(amount);
+    }
+
 }

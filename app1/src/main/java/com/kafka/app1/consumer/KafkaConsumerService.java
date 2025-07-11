@@ -19,6 +19,7 @@ import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -30,6 +31,16 @@ public class KafkaConsumerService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @KafkaListener(
+            topics = KafkaTopicConfig.TOPIC_BATCH,
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "batchFactory"
+    )
+    public void consumerLote(List<String> messages) {
+        System.out.println("📦 Lote recebido com " + messages.size() + " mensagens");
+        messages.forEach(msg -> System.out.println("🔹 " + msg));
+    }
 
     @KafkaListener(topics = KafkaTopicConfig.TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void consumeMessage(String message) {
