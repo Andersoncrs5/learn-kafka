@@ -21,7 +21,6 @@ public class HelloService {
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
-
     public String getHelloMessage() {
         String message = "Hello World from Spring Boot Microservice with Kafka!";
         kafkaProducerService.sendMessage(message);
@@ -66,4 +65,7 @@ public class HelloService {
         kafkaProducerService.sumOrRedMetricTask(metric);
     }
 
+    public void sendMessageDql(String message) {
+        kafkaProducerService.process(message);
+    }
 }

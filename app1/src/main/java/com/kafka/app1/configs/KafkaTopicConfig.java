@@ -15,6 +15,24 @@ public class KafkaTopicConfig {
     public static final String TOPIC_SUM_RED_METRIC_TASK = "test1-study-kafka-sum-red-metric-task";
     public static final String TOPIC_PARTITION_SEND_MESSAGE = "test-study-partition-send-message";
     public static final String TOPIC_PARTITION_KEY_SEND_MESSAGE = "test-study-partition-key-send-message";
+    public static final String TOPIC_TOPICO_PROCESSAMENTO = "topico-processamento";
+    public static final String TOPIC_TOPICO_PROCESSAMENTO_DLT = "topico-processamento.DLT";
+
+    @Bean
+    public NewTopic SendMessgeDlt() {
+        return TopicBuilder.name(TOPIC_TOPICO_PROCESSAMENTO_DLT)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic SendMessge() {
+        return TopicBuilder.name(TOPIC_TOPICO_PROCESSAMENTO)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic PartitionSendMessge() {

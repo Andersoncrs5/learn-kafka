@@ -1,7 +1,5 @@
 package com.kafka.app1.controller;
 
-import com.kafka.app1.configs.KafkaTopicConfig;
-import com.kafka.app1.consumer.KafkaConsumerService;
 import com.kafka.app1.consumer.MetricEnum.ColumnTaskMetricEntity;
 import com.kafka.app1.consumer.MetricEnum.SumOrRedEnum;
 import com.kafka.app1.entity.TaskEntity;
@@ -19,6 +17,12 @@ public class HelloController {
     private HelloService helloService;
     @Autowired
     private KafkaProducerService producerService;
+
+    @GetMapping("/send-message-dlq/{message}")
+    public ResponseEntity<String> sendMEssageDql(@PathVariable String message) {
+        helloService.sendMessageDql(message);
+        return ResponseEntity.ok(message);
+    }
 
     @GetMapping("/")
     public ResponseEntity<String> getHello() {

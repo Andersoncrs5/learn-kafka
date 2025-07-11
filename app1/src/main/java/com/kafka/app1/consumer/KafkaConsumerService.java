@@ -133,4 +133,26 @@ public class KafkaConsumerService {
         System.out.printf("[key=%s] valor=%s | partição=%d%n", record.key(), record.value(), record.partition());
     }
 
+    @KafkaListener(topics = KafkaTopicConfig.TOPIC_TOPICO_PROCESSAMENTO, groupId = "${spring.kafka.consumer.group-id}")
+    public void process(String message) {
+        System.out.println("📥 Recebida: " + message);
+        if (message.contains("erro")) {
+            throw new RuntimeException("Falha proposital");
+        }
+        System.out.println("✅ Processado com sucesso");
+
+    }
+
+    @KafkaListener(
+            topics = "topico-processamento-dlt",
+            groupId = "${spring.kafka.consumer.group-id}"
+    )
+    public void consumirMensagensFalhas(ConsumerRecord<String, String> record) {
+        System.out.println("📦 [DLQ] Mensagem recuperada: " + record.value());
+        System.out.println("🧾 Headers:");
+        record.headers().forEach(header ->
+                System.out.println(" - " + header.key() + ": " + new String(header.value()))
+        );
+    }
+
 }

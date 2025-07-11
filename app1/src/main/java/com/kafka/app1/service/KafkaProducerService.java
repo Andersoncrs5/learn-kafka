@@ -34,6 +34,10 @@ public class KafkaProducerService {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 0, "1","Using partition 0");
     }
 
+    public void sendMessageDql(String message) {
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 0, "1","Using partition 0");
+    }
+
     public void sendMessagePartition1(String message) {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_SEND_MESSAGE, 1, "2","Using partition 1");
     }
@@ -41,8 +45,6 @@ public class KafkaProducerService {
     public void sendMessage(String message){
         kafkaTemplate.send(KafkaTopicConfig.TOPIC, message);
     }
-
-
 
     public void sendMessage1(String message) {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_SEND_MESSAGE, message);
@@ -77,5 +79,11 @@ public class KafkaProducerService {
     public void withKey(String chave, String valor) {
         kafkaTemplate.send(KafkaTopicConfig.TOPIC_PARTITION_KEY_SEND_MESSAGE, chave, valor);
     }
+
+    public void process(String message) {
+        kafkaTemplate.send(KafkaTopicConfig.TOPIC_TOPICO_PROCESSAMENTO, message);
+    }
+
+
 
 }
