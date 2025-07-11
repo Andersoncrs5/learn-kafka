@@ -21,6 +21,10 @@ public class HelloService {
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
+    public void sendMessageWithHeader(String username, String message) {
+        kafkaProducerService.sendMesageWithTopic(username, message);
+    }
+
     public String getHelloMessage() {
         String message = "Hello World from Spring Boot Microservice with Kafka!";
         kafkaProducerService.sendMessage(message);
@@ -73,4 +77,7 @@ public class HelloService {
         kafkaProducerService.sendInLotes(amount);
     }
 
+    public void transferir(String origem, String destino, double valor) {
+        kafkaProducerService.transferir(origem, destino, valor);
+    }
 }

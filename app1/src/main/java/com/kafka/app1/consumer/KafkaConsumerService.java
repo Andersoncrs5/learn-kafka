@@ -32,6 +32,22 @@ public class KafkaConsumerService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @KafkaListener(topics = KafkaTopicConfig.TOPIC_BANK, groupId = "${spring.kafka.consumer.group-id}")
+    public void processar(ConsumerRecord<String, String> record) {
+        String[] partes = record.value().split(":");
+
+        String tipo = partes[0];
+        String conta = partes[1];
+        double valor = Double.parseDouble(partes[2]);
+
+        if (tipo.equals("DEBITO")) {
+            System.out.println("💸 Debitando R$" + valor + " da conta " + conta);
+        } else {
+            System.out.println("💰 Creditando R$" + valor + " na conta " + conta);
+        }
+    }
+
+
     @KafkaListener(
             topics = KafkaTopicConfig.TOPIC_BATCH,
             groupId = "${spring.kafka.consumer.group-id}",
@@ -164,6 +180,15 @@ public class KafkaConsumerService {
         record.headers().forEach(header ->
                 System.out.println(" - " + header.key() + ": " + new String(header.value()))
         );
+    }
+
+    @KafkaListener(topics = KafkaTopicConfig.TOPIC_WITH_HEADER, groupId = "${spring.kafka.consumer.group-id}")
+    public void consumerWithHeader(ConsumerRecord<String, String> record) {
+        System.out.println("Message :" + record.value());
+
+        record.headers().forEach(header -> {
+            System.out.println("🔹 Header: " + header.key() + " = " + new String(header.value()));
+        });
     }
 
 }

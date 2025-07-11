@@ -18,6 +18,22 @@ public class HelloController {
     @Autowired
     private KafkaProducerService producerService;
 
+    @GetMapping("/transferir")
+    public ResponseEntity<String> transferir(
+            @RequestParam String origem,
+            @RequestParam String destino,
+            @RequestParam double valor
+    ) {
+        helloService.transferir(origem, destino, valor);
+        return ResponseEntity.ok("Transferência enviada.");
+    }
+
+    @GetMapping("send-with-header/{actor}/{message}")
+    public ResponseEntity<String> sendMessageWithHeader(@PathVariable String actor, @PathVariable String message) {
+        helloService.sendMessageWithHeader(actor, message);
+        return ResponseEntity.ok("Message sended!");
+    }
+
     @GetMapping("/send-message-dlq/{message}")
     public ResponseEntity<String> sendMEssageDql(@PathVariable String message) {
         helloService.sendMessageDql(message);

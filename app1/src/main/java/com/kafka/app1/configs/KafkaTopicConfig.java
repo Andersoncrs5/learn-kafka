@@ -18,6 +18,24 @@ public class KafkaTopicConfig {
     public static final String TOPIC_TOPICO_PROCESSAMENTO = "topico-processamento";
     public static final String TOPIC_TOPICO_PROCESSAMENTO_DLT = "topico-processamento.DLT";
     public static final String TOPIC_BATCH = "topic-batch";
+    public static final String TOPIC_WITH_HEADER = "topic-header";
+    public static final String TOPIC_BANK = "topic-bank";
+
+    @Bean
+    public NewTopic TopicBank() {
+        return TopicBuilder.name(TOPIC_BANK)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic TopicWithHeader() {
+        return TopicBuilder.name(TOPIC_WITH_HEADER)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic SendTopicBatch() {

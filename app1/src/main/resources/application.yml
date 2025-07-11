@@ -13,9 +13,11 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: 1
+      acks: all
       retries: 2
       delivery-timeout-ms: 30000
+      enable-idempotence: true
+      transaction-id-prefix: tx-
 
 springdoc:
   swagger-ui:
