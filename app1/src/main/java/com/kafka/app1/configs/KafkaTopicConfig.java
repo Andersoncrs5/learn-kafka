@@ -20,6 +20,15 @@ public class KafkaTopicConfig {
     public static final String TOPIC_BATCH = "topic-batch";
     public static final String TOPIC_WITH_HEADER = "topic-header";
     public static final String TOPIC_BANK = "topic-bank";
+    public static final String TOPIC_CONNECT_GO = "topic_connect_go";
+
+    @Bean
+    public NewTopic TopicConnectGo() {
+        return TopicBuilder.name(TOPIC_CONNECT_GO)
+                .partitions(5)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic TopicBank() {

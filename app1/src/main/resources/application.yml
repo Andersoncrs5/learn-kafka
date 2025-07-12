@@ -15,11 +15,11 @@ spring:
 #        interceptor.classes: com.kafka.app1.configs.LoggingProducerInterceptor
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: all
+      acks: 1
       retries: 2
-      delivery-timeout-ms: 30000
-      enable-idempotence: true
-      transaction-id-prefix: tx-
+#      delivery-timeout-ms: 30000
+#      enable-idempotence: true
+#      transaction-id-prefix: tx-
 
 springdoc:
   swagger-ui:
