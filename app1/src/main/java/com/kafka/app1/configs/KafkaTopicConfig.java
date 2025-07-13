@@ -21,6 +21,15 @@ public class KafkaTopicConfig {
     public static final String TOPIC_WITH_HEADER = "topic-header";
     public static final String TOPIC_BANK = "topic-bank";
     public static final String TOPIC_CONNECT_GO = "topic_connect_go";
+    public static final String TOPIC_ORDER_GO = "topic_order_go";
+
+    @Bean
+    public NewTopic TopicSendObjGo() {
+        return TopicBuilder.name(TOPIC_ORDER_GO)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic TopicConnectGo() {
