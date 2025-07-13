@@ -27,8 +27,11 @@ func main() {
 			case "topic_connect_go":
 				handler = &kafka.TopicConnectGo{}
 			
-			case "topic_send_obj":
+			case "topic_send_obj_go":
 				handler = &kafka.TopicSendObject{}
+
+			case "topic_order_go":
+				handler = &kafka.OrderMessageHandler{}
 
 			default:
 				log.Printf("Atenção: Nenhum handler específico encontrado para o tópico '%s'. Usando ConsoleMessageHandler padrão.", consumerCfg.Topic)

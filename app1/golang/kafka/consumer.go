@@ -2,7 +2,9 @@ package kafka
 
 import (
 	"context"
+	"encoding/json"
 	"golang/config"
+	"golang/models"
 	"log"
 	"time"
 
@@ -104,4 +106,22 @@ type ConsoleMessageHandler struct{}
 func (h *ConsoleMessageHandler) Handle(ctx context.Context, msg kafka.Message) error {
 	log.Printf("PROCESSANDO PEDIDO - Tópico: %s | Chave: %s | Valor: %s\n",msg.Topic, string(msg.Key), string(msg.Value))
 	return nil;
+}
+
+type OrderMessageHandler struct{}
+
+func (h *OrderMessageHandler) Handle(ctx context.Context, msg kafka.Message) error {
+	log.Printf("PROCESSANDO PEDIDO - Tópico: %s | Chave: %s | Valor: %s\n",msg.Topic, string(msg.Key), string(msg.Value))
+
+	var order models.Order
+
+	err := json.Unmarshal(msg.Value, &order);
+	if err != nil {
+		log.Printf("ERRO: Falha ao deserializar mensagem JSON para Order: %v | Valor: %s", err, string(msg.Value))
+		return err
+	}
+
+	log.Printf("Pedido deserializado: OrderID=%s, ProductID=%s, Quantity=%d, Status=%s",order.OrderID, order.ProductID, order.Quantity, order.Status)
+
+	return nil 
 }
